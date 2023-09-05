@@ -1,0 +1,4 @@
+% video
+
+# Take a thumbnail of a video
+ffmpeg -itsoffset -10 -i <file> -vcodec mjpeg -vframes 1 -an -f rawvideo <image>

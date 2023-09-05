@@ -1,0 +1,7 @@
+% perl
+
+# Print the contents of the @INC and %INC variables
+perl -MData::Dumper '<file>' -e 'END {$Data::Dumper::Sortkeys=1; print Data::Dumper->Dump([\@INC,\%INC],[qw(*INC *INC)])}'
+
+# Print a section of a file's Perldoc
+perldoc -t '<file>' | perl -pe '$_="" if (/^'"$2"'/.../^\S/) !~ /^\d+(?<!^1)$/'

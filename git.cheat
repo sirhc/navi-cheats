@@ -1,0 +1,7 @@
+% git
+
+$ remote: git remote
+$ branch: git ls-remote --heads <remote> | sed 's?.*refs/heads/??'
+
+# Delete remote branch
+git push <remote> --delete <branch>

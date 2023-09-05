@@ -1,0 +1,4 @@
+% misc
+
+# Update the cloudflared package
+sudo dnf upgrade https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm

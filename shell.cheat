@@ -1,0 +1,15 @@
+% shell
+
+# Copy environment variable to clipboard
+echo '<env_var_value>' | pbcopy
+
+$ env_var_value: env | sort | sed 's/=/\t/' | column -t -s $'\t' -c2 --- --column 2
+
+# Select a random line from a file
+shuf <file> | head -1
+
+# Mount an ISO file
+mount -r -t iso9660 -o loop '<iso_file>' '<mount_point>'
+
+$ iso_file: ls -1 *.iso --- --fzf-overrides '--no-select-1'
+$ mount_point: ls -1d */ --- --fzf-overrides '--no-select-1'

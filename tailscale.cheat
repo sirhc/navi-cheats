@@ -1,0 +1,12 @@
+% tailscale
+
+# Disable use of exit node
+sudo tailscale up --exit-node=
+
+# Use an exit node
+sudo tailscale up --exit-node=<exit_node>
+
+# Use an exit node, preserving LAN access
+sudo tailscale up --exit-node=<exit_node> --exit-node-allow-lan-access=true
+
+$ exit_node: tailscale status --json | jq -r '.Peer | .[] | select(.ExitNodeOption == true) | .HostName'

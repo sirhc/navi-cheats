@@ -1,0 +1,10 @@
+% openssl
+
+$ file: ls -1 *.pem --- --fzf-overrides '--no-select-1'
+$ port: echo -e '443' --- --fzf-overrides '--no-select-1'
+
+# View a PEM certificate
+openssl x509 -in <file> -text
+
+# Fetch a host certificate
+echo | openssl s_client -connect '<host>:<port>' 2>/dev/null | openssl x509

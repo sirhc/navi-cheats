@@ -1,0 +1,4 @@
+% tools
+
+# Attempt to remove a paywall from a site
+navi fn url::open 'https://www.removepaywall.com/<url>'

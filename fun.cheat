@@ -1,0 +1,4 @@
+% fun
+
+# Play the mosquito sound (https://en.wikipedia.org/wiki/The_Mosquito)
+play -n synth sine 17400
