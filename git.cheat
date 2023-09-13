@@ -5,3 +5,6 @@ $ branch: git ls-remote --heads <remote> | sed 's?.*refs/heads/??'
 
 # Delete remote branch
 git push <remote> --delete <branch>
+
+# Rewrite all commits to use me as the author
+git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE="%cD" GIT_AUTHOR_DATE="%aD" git commit --amend --no-edit --reset-author' rebase -f --root
