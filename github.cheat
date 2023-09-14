@@ -1,0 +1,19 @@
+% github, gh
+
+$ current_dir_base: basename "$( pwd )" --- --fzf-overrides '--no-select-1'
+$ current_user: gh api user --jq .login --- --fzf-overrides '--no-select-1'
+$ default_branch: gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
+
+# Get default branch
+gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
+
+# Create a repository based on the current directory
+gh repo create <current_user>/<current_dir_base> --private --push --source=.
+
+# List all repositories for a user/org
+gh api graphql --paginate -F owner=<owner> -f query='
+  query($owner: String!, $endCursor: String) {
+    repositoryOwner(login: $owner) {
+      repositories(first: 100 ownerAffiliations: OWNER isFork: false orderBy: { field: NAME direction: ASC } after: $endCursor) { totalCount pageInfo { hasNextPage endCursor } nodes { nameWithOwner } } } }'
+
+$ owner: basename "$( pwd )" --- --fzf-overrides '--no-select-1'
