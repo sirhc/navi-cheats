@@ -7,7 +7,10 @@ $ default_branch: gh repo view --json defaultBranchRef --jq .defaultBranchRef.na
 # Get default branch
 gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
 
-# Create a repository based on the current directory
+# Create a PUBLIC repository based on the current directory
+gh repo create <current_user>/<current_dir_base> --public --push --source=.
+
+# Create a PRIVATE repository based on the current directory
 gh repo create <current_user>/<current_dir_base> --private --push --source=.
 
 # List all repositories for a user/org
