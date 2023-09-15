@@ -1,0 +1,6 @@
+% myrepos, mr
+
+# Convert one-line mr output to CSV
+sed -e 's,mr [a-z]*: .*/,,' -e '/^$/d' <file> | paste -s -d',\n' -
+
+$ file: ls -1p | grep -v / --- --fzf-overrides '--no-select-1'
