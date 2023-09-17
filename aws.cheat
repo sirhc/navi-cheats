@@ -1,0 +1,19 @@
+% aws, common
+
+$ account: aws sts get-caller-identity --output text --query 'Account' --- --fzf-overrides '--no-select-1'
+$ arn: aws sts get-caller-identity --output text --query 'Arn' --- --fzf-overrides '--no-select-1'
+$ profiles: aws configure list-profiles
+$ regions: aws account list-regions --output text --query 'Regions[?RegionOptStatus != `DISABLED`].[RegionName]'
+$ userid: aws sts get-caller-identity --output text --query 'UserId' --- --fzf-overrides '--no-select-1'
+
+% aws
+@ aws, common
+
+# List configured profiles
+aws configure list-profiles
+
+# List available regions
+aws account list-regions --output json
+
+# whoami
+aws sts get-caller-identity --output json
