@@ -1,7 +1,7 @@
 % terraform, tf
 
 $ state_address: terraform state list
-$ workspace_name: terraform workspace list
+$ workspace_name: terraform workspace list | cut -c 3-
 
 # Select a workspace
 terraform workspace select <workspace_name>
