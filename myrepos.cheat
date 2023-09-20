@@ -3,7 +3,7 @@
 # Set MR_CONFIG
 export MR_CONFIG=<mrconfig>
 
-$ mrconfig: ls -1 .mrconfig* --- --fzf-overrides '--no-select-1'
+$ mrconfig: find "$PWD" -mindepth 1 -maxdepth 1 -name '.mrconfig*' | sort --- --fzf-overrides '--no-select-1'
 
 # Convert one-line mr output to CSV
 sed -e 's,mr [a-z]*: .*/,,' -e '/^$/d' <file> | paste -s -d',\n' -
