@@ -1,5 +1,10 @@
 % myrepos, mr
 
+# Set MR_CONFIG
+export MR_CONFIG=<mrconfig>
+
+$ mrconfig: ls -1 .mrconfig* --- --fzf-overrides '--no-select-1'
+
 # Convert one-line mr output to CSV
 sed -e 's,mr [a-z]*: .*/,,' -e '/^$/d' <file> | paste -s -d',\n' -
 
