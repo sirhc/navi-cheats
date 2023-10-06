@@ -21,5 +21,8 @@ aws sts get-caller-identity --output json
 # EC2 instance ids by name
 aws ec2 describe-instances --filters 'Name=tag:Name,Values=<name>' --query 'Reservations[].Instances[].[InstanceId]' --output text
 
+# Find a security group by name
+aws ec2 describe-security-groups --filters 'Name=tag:Name,Values=<name>'
+
 # Start a session on an EC2 instance
 aws ssm start-session --target <instance_id>
