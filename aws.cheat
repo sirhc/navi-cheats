@@ -29,3 +29,6 @@ aws ssm start-session --target <instance_id>
 
 # Search Parameter Store
 aws ssm describe-parameters --parameter-filters 'Key=Name,Option=Contains,Values=<search>' --query 'Parameters[*].[Name]' --output text
+
+# Get Parameter Store value
+aws ssm get-parameters --name <name> --with-decryption --query 'Parameters[0].Value' --output text
