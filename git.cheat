@@ -13,5 +13,6 @@ $ git_reponame: basename $( git rev-parse --show-toplevel ) --- --fzf-overrides 
 # Delete remote branch
 git push <git_remote> --delete <git_branch>
 
+; https://stackoverflow.com/questions/41301627/how-to-update-git-commit-author-but-keep-original-date-when-amending
 # Rewrite all commits to use me as the author
 git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE="%cD" GIT_AUTHOR_DATE="%aD" git commit --amend --no-edit --reset-author' rebase -f --root
