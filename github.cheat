@@ -1,17 +1,18 @@
-% github, gh
+% github, gh, common
 
-$ current_dir_base: basename "$( pwd )" --- --fzf-overrides '--no-select-1'
-$ current_user: gh api user --jq .login --- --fzf-overrides '--no-select-1'
-$ default_branch: gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
+$ gh_default_branch: gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
+$ gh_user: gh api user --jq .login --- --fzf-overrides '--no-select-1'
+
+% github, gh
 
 # Get default branch
 gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
 
 # Create a PUBLIC repository based on the current directory
-gh repo create <current_user>/<current_dir_base> --public --push --source=.
+gh repo create <gh_user>/<git_reponame> --public --push --source=.
 
 # Create a PRIVATE repository based on the current directory
-gh repo create <current_user>/<current_dir_base> --private --push --source=.
+gh repo create <gh_user>/<git_reponame> --private --push --source=.
 
 # List all repositories for a user/org
 gh api graphql --paginate -F owner=<owner> -f query='
