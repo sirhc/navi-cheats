@@ -1,5 +1,8 @@
 % aws, common
 
+$ aws_current_profile: echo "$AWS_PROFILE"
+$ aws_current_region: echo "$AWS_REGION"
+
 $ account: aws sts get-caller-identity --output text --query 'Account' --- --fzf-overrides '--no-select-1'
 $ arn: aws sts get-caller-identity --output text --query 'Arn' --- --fzf-overrides '--no-select-1'
 $ profiles: aws configure list-profiles

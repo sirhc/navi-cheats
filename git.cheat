@@ -1,10 +1,17 @@
-% git
+% git, common
 
-$ remote: git remote
-$ branch: git ls-remote --heads <remote> | sed 's?.*refs/heads/??'
+$ gitref: git rev-parse --abbrev-ref HEAD --- --fzf-overrides '--no-select-1'
+$ gitsha: git rev-parse HEAD --- --fzf-overrides '--no-select-1'
+
+$ git_branch: git ls-remote --heads <git_remote> | sed 's?.*refs/heads/??'
+$ git_remote: git remote
+$ git_reponame: basename $( git rev-parse --show-toplevel ) --- --fzf-overrides '--no-select-1'
+
+% git
+@ git, common
 
 # Delete remote branch
-git push <remote> --delete <branch>
+git push <git_remote> --delete <git_branch>
 
 # Rewrite all commits to use me as the author
 git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE="%cD" GIT_AUTHOR_DATE="%aD" git commit --amend --no-edit --reset-author' rebase -f --root
