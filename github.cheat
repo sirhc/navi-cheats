@@ -4,6 +4,7 @@ $ gh_default_branch: gh repo view --json defaultBranchRef --jq .defaultBranchRef
 $ gh_user: gh api user --jq .login --- --fzf-overrides '--no-select-1'
 
 % github, gh
+@ github, gh, common
 
 # Get default branch
 gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
@@ -21,3 +22,9 @@ gh api graphql --paginate -F owner=<owner> -f query='
       repositories(first: 100 ownerAffiliations: OWNER isFork: false orderBy: { field: NAME direction: ASC } after: $endCursor) { totalCount pageInfo { hasNextPage endCursor } nodes { nameWithOwner } } } }'
 
 $ owner: basename "$( pwd )" --- --fzf-overrides '--no-select-1'
+
+# Create a pull-request based on the current Jira issue (i.e., PROJ-1234 or PROJ_1234)
+gh pr create --title '<issue> <title>' --body '<body>'
+
+$ issue: git rev-parse --abbrev-ref HEAD | grep -Eio '[a-z]+[_-][0-9]+' | tr '[a-z]_' '[A-Z]-' --- --fzf-overrides '--no-select-1'
+$ title: git log --format=%s <gh_default_branch>..HEAD --- --fzf-overrides '--no-select-1'
