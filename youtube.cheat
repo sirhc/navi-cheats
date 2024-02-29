@@ -1,0 +1,4 @@
+% youtube
+
+# Download a YouTube video
+yt-dlp --add-metadata --write-info-json --write-thumbnail --format 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' --output '%(title)s [%(id)s].%(ext)s' '<url>'
