@@ -1,0 +1,7 @@
+% pdf
+
+# Combine PDF files
+echo pdfunite <pdf_files> <pdf_output>
+
+$ pdf_files: ls -1 *.pdf --- --fzf-overrides '--no-select-1' --multi --expand
+$ pdf_output: echo 'out.pdf' --- --fzf-overrides '--no-select-1'
