@@ -35,3 +35,6 @@ aws ssm describe-parameters --parameter-filters 'Key=Name,Option=Contains,Values
 
 # Get Parameter Store value
 aws ssm get-parameters --name <name> --with-decryption --query 'Parameters[0].Value' --output text
+
+# Count network interface types
+aws ec2 describe-network-interfaces --query 'NetworkInterfaces[].[InterfaceType]' --output text | sort | uniq -c | sort -n
