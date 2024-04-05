@@ -8,3 +8,6 @@ terraform workspace select <workspace_name>
 
 # Show resource state
 terraform state show <state_address>
+
+# Remove .terraform directories
+find . -type d -name .terraform -exec rm -rf '{}' +
