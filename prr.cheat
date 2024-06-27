@@ -1,0 +1,9 @@
+% prr
+
+$ prr_handle: prr status | { sed -u '1q' ; sort -k2,1; } --- --headers 1 --column 1 --delimiter '\s+'
+
+# Edit a Pull Request
+prr edit <prr_handle>
+
+# Submit a Pull Request
+prr submit <prr_handle>
