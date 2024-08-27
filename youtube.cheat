@@ -3,5 +3,10 @@
 # Download a YouTube video
 yt-dlp --add-metadata --write-info-json --write-thumbnail --format 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' --output '%(title)s [%(id)s].%(ext)s' '<url>'
 
-# Extract MP3 audio from a set of videos
+# Extract MP3 audio from all videos in the current directory
 for f in *.mp4; do ffmpeg -i "$f" -q:a 0 -map a "${f%.mp4}.mp3"; done
+
+# Extract MP3 audio from selected videos in the current directory
+for f in <videos>; do ffmpeg -i "$f" -q:a 0 -map a "${f%.mp4}.mp3"; done
+
+$ videos: ls -1 *.mp4 --- --multi --expand
