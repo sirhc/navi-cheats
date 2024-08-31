@@ -1,0 +1,9 @@
+% tmux
+
+# Create a new named session
+tmux new -s <new-session>
+
+# Attach to a named session
+tmux attach -t <existing-session>
+
+$ existing-session: tmux list-sessions --- --column 1 --delimiter ':' --fzf-overrides '--no-select-1'
