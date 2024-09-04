@@ -28,3 +28,8 @@ gh pr create --title '<issue> <title>' --body '<body>'
 
 $ issue: git rev-parse --abbrev-ref HEAD | grep -Eio '[a-z]+[_-][0-9]+' | tr '[a-z]_' '[A-Z]-' --- --fzf-overrides '--no-select-1'
 $ title: jira view $issue --gjq 'fields.summary' --- --fzf-overrides '--no-select-1'
+
+% github, gh, api
+@ github, gh, common
+
+gh api 'repos/{owner}/{repo}/git/refs/tags'
