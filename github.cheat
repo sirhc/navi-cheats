@@ -32,4 +32,5 @@ $ title: jira view $issue --gjq 'fields.summary' --- --fzf-overrides '--no-selec
 % github, gh, api
 @ github, gh, common
 
+# List all tags for a repository
 gh api 'repos/{owner}/{repo}/git/refs/tags'
