@@ -1,0 +1,13 @@
+% date
+
+# Convert a date between time zones
+dateconv '<date>' --from-zone '<src_tz>' --zone '<dst_tz>'
+
+$ date: printf 'now         interpreted as the current (UTC) time stamp\n'; \
+        printf 'time        the time part of the current (UTC) time stamp\n'; \
+        printf 'today       the current date (according to UTC)\n'; \
+        printf 'tomorrow    tomorrow'"'"'s date (according to UTC)\n'; \
+        printf 'yesterday   yesterday'"'"'s date (according to UTC)\n'; \
+        --- --column 1 --delimiter '\s+'
+$ src_tz: awk '/^L / { print $3 }' /usr/share/zoneinfo/tzdata.zi | sort -u
+$ dst_tz: awk '/^L / { print $3 }' /usr/share/zoneinfo/tzdata.zi | sort -u
