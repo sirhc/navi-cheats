@@ -3,6 +3,9 @@
 $ aws_current_profile: echo "$AWS_PROFILE"
 $ aws_current_region: echo "$AWS_REGION"
 
+$ aws_profile: aws configure list-profiles | sort
+$ aws_region: curl -fsSL https://raw.githubusercontent.com/boto/botocore/develop/botocore/data/endpoints.json | jq -r '.partitions[0].regions | keys | sort[]'
+
 $ account: aws sts get-caller-identity --output text --query 'Account' --- --fzf-overrides '--no-select-1'
 $ arn: aws sts get-caller-identity --output text --query 'Arn' --- --fzf-overrides '--no-select-1'
 $ profiles: aws configure list-profiles
@@ -43,3 +46,8 @@ $ ssm_parameter_type: printf 'String\nStringList\nSecureString\n'
 
 # Count network interface types
 aws ec2 describe-network-interfaces --query 'NetworkInterfaces[].[InterfaceType]' --output text | sort | uniq -c | sort -n
+
+# Open a bookmarked URL in a defined profile
+assume <aws_profile> --region <aws_region> --cd <bookmarked_url>
+
+$ bookmarked_url: mlr --icsv --opprint cat ~/.aws/bookmarks.csv --- --headers 1 --column 1 --delimiter '\s+' --fzf-overrides '--no-select-1'
