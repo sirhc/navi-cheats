@@ -2,3 +2,6 @@
 
 # Update the cloudflared package
 sudo dnf upgrade https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm
+
+# Preview bat(1) themes
+bat --list-themes | fzf --preview 'bat --theme={} --color=always ~/.zshrc'
