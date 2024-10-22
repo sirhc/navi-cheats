@@ -2,6 +2,7 @@
 
 $ gh_default_branch: gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
 $ gh_user: gh api user --jq .login --- --fzf-overrides '--no-select-1'
+$ gh_latest_release: gh api 'repos/{owner}/{repo}/releases/latest' --jq '.tag_name'
 
 % github, gh
 @ github, gh, common
@@ -28,6 +29,9 @@ gh pr create --title '[<issue>] <title>' --body '<body>'
 
 $ issue: git rev-parse --abbrev-ref HEAD | grep -Eio '[a-z]+[_-][0-9]+' | tr '[a-z]_' '[A-Z]-' --- --fzf-overrides '--no-select-1'
 $ title: jira view $issue --gjq 'fields.summary'; git log --format=%s <gh_default_branch>..HEAD; --- --fzf-overrides '--no-select-1'
+
+# Open tig at the latest release
+tig <gh_latest_release>
 
 % github, gh, api
 @ github, gh, common
