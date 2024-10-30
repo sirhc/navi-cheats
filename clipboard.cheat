@@ -1,0 +1,4 @@
+% clipboard
+
+# Extract a Jira issue key
+pbpaste | grep -Eio '[a-z]+[-][0-9]+' | tr -d $'\n' | tr '[:lower:]' '[:upper:]' | pbcopy

@@ -1,0 +1,13 @@
+% kubernetes, k8s, kubectl
+
+$ cluster: aws eks list-clusters --output text | awk '{ print $2 }'
+$ container: kubectl get pods --namespace <namespace> <pod> -o json | jq -r '.spec.containers[].name'
+$ namespace: kubectl get namespaces --- --headers 1 --column 1
+$ pod: kubectl get pods --namespace <namespace> --- --headers 1 --column 1
+
+# Configure kubectl for Amazon EKS
+aws eks update-kubeconfig --name <cluster>
+
+; https://kubernetes.io/docs/tasks/debug/debug-application/get-shell-running-container/
+# Connect to a running container
+kubectl exec --namespace <namespace> --container <container> --stdin --tty <pod> -- /bin/bash

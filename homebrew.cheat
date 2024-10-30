@@ -1,0 +1,19 @@
+% homebrew
+
+$ formula: brew search --formula /./ --- --preview 'brew info --formula {1}'
+$ installed: brew list --formula --- --preview 'brew info --formula {1}'
+
+$ cask: brew search --cask /./ --- --preview 'brew info --cask {1}'
+$ installed_cask: brew list --cask --- --preview 'brew info --cask {1}'
+
+# Install a formula
+brew install --formula <formula>
+
+# Uninstall a formula
+brew uninstall --formula <installed>
+
+# Install a cask
+brew install --cask <cask>
+
+# Uninstall a cask
+brew uninstall --cask <installed_cask>

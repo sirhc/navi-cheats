@@ -1,20 +1,37 @@
 % git, common
 
-$ gitref: git rev-parse --abbrev-ref HEAD --- --fzf-overrides '--no-select-1'
-$ gitsha: git rev-parse HEAD --- --fzf-overrides '--no-select-1'
+$ gitref: git rev-parse --abbrev-ref HEAD
+$ gitsha: git rev-parse HEAD
 
-$ git_branch: git ls-remote --heads <git_remote> | sed 's?.*refs/heads/??'
+$ git_branch: git for-each-ref --format='%(refname:short)' refs/heads/ --- --preview 'git log -n 50 --color=always --graph --oneline --decorate=short {1}'
+$ git_tag: git tag --- --preview 'git log -n 50 --color=always --graph --oneline {1}'
 $ git_remote: git remote
-$ git_reponame: basename $( git rev-parse --show-toplevel ) --- --fzf-overrides '--no-select-1'
+$ git_remote_branch: git branch -r --- --preview 'git log -n 50 --color=always --graph --oneline --decorate=short {1}' --map 'cut -d / -f 2-'
+$ git_repo: git config get "remote.$( git remote ).url" | awk -F/ '{ print $NF }' | sed -e 's/.git$//'
+$ git_toplevel: git rev-parse --show-toplevel
 
-% git
+% git, branch
 @ git, common
+
+# Switch to a local branch
+git switch <git_branch>
+
+# Switch to a local tag
+git switch <git_tag>
+
+# Switch to and track a remote branch
+git switch <git_remote_branch>
+
+# Delete a branch
+git branch -d <git_branch>
+
+# Delete a remote branch
+git push <git_remote> --delete <git_remote_branch> --no-verify
 
 # Merge a branch into the current branch
 git merge <git_branch>
 
-# Delete remote branch
-git push <git_remote> --delete <git_branch>
+% git, misc
 
 ; https://stackoverflow.com/questions/41301627/how-to-update-git-commit-author-but-keep-original-date-when-amending
 # Rewrite all commits to use me as the author

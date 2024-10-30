@@ -1,19 +1,26 @@
 % aws, common
 
-$ aws_current_profile: echo "$AWS_PROFILE"
-$ aws_current_region: echo "$AWS_REGION"
+$ current_profile: echo "$AWS_PROFILE"
+$ current_region: echo "$AWS_REGION"
 
-$ aws_profile: aws configure list-profiles | sort
-$ aws_region: curl -fsSL https://raw.githubusercontent.com/boto/botocore/develop/botocore/data/endpoints.json | jq -r '.partitions[0].regions | keys | sort[]'
-
-$ account: aws sts get-caller-identity --output text --query 'Account' --- --fzf-overrides '--no-select-1'
-$ arn: aws sts get-caller-identity --output text --query 'Arn' --- --fzf-overrides '--no-select-1'
-$ profiles: aws configure list-profiles
-$ regions: aws account list-regions --output text --query 'Regions[?RegionOptStatus != `DISABLED`].[RegionName]'
-$ userid: aws sts get-caller-identity --output text --query 'UserId' --- --fzf-overrides '--no-select-1'
+$ account: aws sts get-caller-identity --query 'Account' --output text
+$ account_alias: aws iam list-account-aliases --query 'AccountAliases' --output text
+$ arn: aws sts get-caller-identity --output text --query 'Arn'
+$ profile: aws configure list-profiles | sort
+$ profile_region: aws configure get region --profile $profile --- --fzf-overrides '--no-select-1'
+$ region: curl -fsSL https://raw.githubusercontent.com/boto/botocore/develop/botocore/data/endpoints.json | jq -r '.partitions[0].regions | keys | sort[]'
+$ user_id: aws sts get-caller-identity --output text --query 'UserId'
 
 % aws
 @ aws, common
+
+# Show CLI example
+bat --theme=DarkNeon <example>
+
+$ example: fd -g '*.rst' /opt/homebrew/share/awscli/examples ~/.local/opt/awscli/v2/current/dist/awscli/examples | sort --- --preview 'bat -fn --theme=DarkNeon {}'
+
+# Set the region
+export AWS_REGION=<region>
 
 # List configured profiles
 aws configure list-profiles
@@ -24,35 +31,47 @@ aws account list-regions --output json
 # whoami
 aws sts get-caller-identity --output json
 
-# EC2 instance ids by name
-aws ec2 describe-instances --filters 'Name=tag:Name,Values=<name>' --query 'Reservations[].Instances[].[InstanceId]' --output text
+# Open a bookmarked URL in a profile tab
+assume <profile> --region <profile_region> --cd <bookmark>
 
-# Find a security group by name
-aws ec2 describe-security-groups --filters 'Name=tag:Name,Values=<name>'
+$ bookmark: mlr --c2p cat ~/.aws/bookmarks.csv --- --headers 1 --column 1 --delimiter '\s+' --fzf-overrides '--no-select-1'
+
+% aws, ec2
+
+$ instance_id: aws ec2 describe-instances --query 'Reservations[].Instances[].{InstanceId: InstanceId, Name: Tags[?Key==`Name`]|[0].Value}' --output json | mlr --j2p cat --- --headers 1 --column 1 --delimiter '\s+'
 
 # Start a session on an EC2 instance
 aws ssm start-session --target <instance_id>
 
+# EC2 instance ids by name
+aws ec2 describe-instances --filters 'Name=tag:Name,Values=<name>' --query 'Reservations[].Instances[].[InstanceId]' --output text
+
+# Describe an instance
+aws ec2 describe-instances --instance-id <instance_id>
+
 # List tags for an EC2 instance
 aws ec2 describe-tags --filters 'Name=resource-id,Values=<instance_id>'
 
-$ instance_id: { echo -e 'InstanceId\tEnvironment\tName'; aws ec2 describe-instances --query 'Reservations[].Instances[].[InstanceId,Tags[?Key==`Environment`]|[0].Value,Tags[?Key==`Name`]|[0].Value]' --output text | sort -k2 -k3; } | column -t --- --headers 1 --column 1 --delimiter '\s\s+'
-
-# Search Parameter Store
-aws ssm describe-parameters --parameter-filters 'Key=Name,Option=Contains,Values=<search>' --query 'Parameters[*].[Name]' --output text
-
-# Get Parameter Store value
-aws ssm get-parameters --name '<name>' --with-decryption --query 'Parameters[0].Value' --output text
-
-# Set Parameter Store value
-aws ssm put-parameter --name '<name>' --value '<value>' --type '<ssm_parameter_type>'
-
-$ ssm_parameter_type: printf 'String\nStringList\nSecureString\n'
+# Find a security group by name
+aws ec2 describe-security-groups --filters 'Name=tag:Name,Values=<name>'
 
 # Count network interface types
 aws ec2 describe-network-interfaces --query 'NetworkInterfaces[].[InterfaceType]' --output text | sort | uniq -c | sort -n
 
-# Open a bookmarked URL in a defined profile
-assume <aws_profile> --region <aws_region> --cd <bookmarked_url>
+% aws, s3
 
-$ bookmarked_url: mlr --icsv --opprint cat ~/.aws/bookmarks.csv --- --headers 1 --column 1 --delimiter '\s+' --fzf-overrides '--no-select-1'
+# List buckets containing a string
+aws s3api list-buckets --query "Buckets[?contains(Name, '<name>')].[Name]" --output text | sort | less
+
+% aws, ssm
+
+# Get parameter
+aws ssm get-parameter --name '<name>' --with-decryption --query 'Parameters[0].Value' --output text
+
+# Set parameter
+aws ssm put-parameter --name '<name>' --value '<value>' --type '<type>'
+
+$ type: printf 'String\nStringList\nSecureString\n'
+
+# Search for parameter
+aws ssm describe-parameters --parameter-filters 'Key=Name,Option=Contains,Values=<search>' --query 'Parameters[*].[Name]' --output text
