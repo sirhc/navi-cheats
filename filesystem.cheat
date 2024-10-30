@@ -1,4 +1,4 @@
-% fs, filesystem
+% filesystem, fs
 
 # Fix file and directory permissions
 find . -mindepth 1 '(' -type d -exec chmod 0755 '{}' ';' ')' -o '(' -type f -exec chmod 0644 '{}' ';' ')'

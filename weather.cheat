@@ -1,11 +1,7 @@
 % weather
 
 # Show weather info for current location
-curl -fsSL https://wttr.in/ \
-    | grep -v 'Follow' \
-    | grep -v 'New feature'
+curl -fsSL https://wttr.in/ | grep -v 'Follow' | grep -v 'New feature'
 
 # Show weather info for a specific location
-curl -fsSL 'https://wttr.in/<location>' \
-    | grep -v 'Follow' \
-    | grep -v 'New feature'
+curl -fsSL 'https://wttr.in/<location>' | grep -v 'Follow' | grep -v 'New feature'

@@ -1,15 +1,17 @@
 % shell
 
-# Copy environment variable to clipboard
-echo '<env_var_value>' | pbcopy
+# Copy the value of an environment variable to clipboard
+<<<"$<env>" tr -d $'\n' | pbcopy
 
-$ env_var_value: env | sort | sed 's/=/\t/' | column -t -s $'\t' -c2 --- --column 2
+$ env: env | sort | cut -d = -f 1 --- --preview 'eval "echo $"{}'
 
 # Select a random line from a file
-shuf <file> | head -1
+shuf '<file>' | head -1
+
+$ file: find . -mindepth 1 -maxdepth 1 -type f --- --preview 'cat {}'
 
 # Mount an ISO file
 mount -r -t iso9660 -o loop '<iso_file>' '<mount_point>'
 
-$ iso_file: ls -1 *.iso --- --fzf-overrides '--no-select-1'
-$ mount_point: ls -1d */ --- --fzf-overrides '--no-select-1'
+$ iso_file: find . -mindepth 1 -maxdepth 1 -type f -name '*.iso' | sort
+$ mount_point: find . -mindepth 1 -maxdepth 1 -type d | sort
