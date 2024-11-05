@@ -1,6 +1,7 @@
 % taskwarrior, task
 
 # Mark a task done
-task <task_id> done
+task <task_id> done  # <task_description>
 
 $ task_id: task status:pending export rc.json.array=on 2>/dev/null | jq -r '.[] | {id, description, urgency}' | mlr --j2p sort -r urgency --- --headers 1 --column 1 --delimiter '\s+' --preview 'task {1}'
+$ task_description: task $task_id export | jq -r '.[0].description'
