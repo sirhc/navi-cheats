@@ -31,6 +31,14 @@ git push <git_remote> --delete <git_remote_branch> --no-verify
 # Merge a branch into the current branch
 git merge <git_branch>
 
+% git, log
+
+# Show all authors of a repository
+git log --format='%an <%ae>' | sort -u
+
+# Show all authors of a repository (respecting .mailmap)
+git log --format='%aN <%aE>' | sort -u
+
 % git, misc
 
 ; https://stackoverflow.com/questions/41301627/how-to-update-git-commit-author-but-keep-original-date-when-amending
