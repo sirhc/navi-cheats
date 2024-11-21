@@ -66,7 +66,7 @@ aws s3api list-buckets --query "Buckets[?contains(Name, '<name>')].[Name]" --out
 % aws, ssm
 
 # Get parameter
-aws ssm get-parameter --name '<name>' --with-decryption --query 'Parameters[0].Value' --output text
+aws ssm get-parameter --name '<name>' --with-decryption --query 'Parameter.Value' --output text
 
 # Set parameter
 aws ssm put-parameter --name '<name>' --value '<value>' --type '<type>'
