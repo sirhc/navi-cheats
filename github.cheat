@@ -25,7 +25,7 @@ gh api graphql --paginate -F owner=<owner> -f query='
 $ owner: basename "$( pwd )" --- --fzf-overrides '--no-select-1'
 
 # Create a pull-request based on the current Jira issue (i.e., PROJ-1234 or PROJ_1234)
-gh pr create --title '[<issue>] <title>' --body '<body>'
+gh pr create --title '<issue>: <title>' --body '<body>'
 
 $ issue: git rev-parse --abbrev-ref HEAD | grep -Eio '[a-z]+[_-][0-9]+' | tr '[a-z]_' '[A-Z]-' --- --fzf-overrides '--no-select-1'
 $ title: jira view $issue --gjq 'fields.summary'; git log --format=%s <gh_default_branch>..HEAD; --- --fzf-overrides '--no-select-1'
