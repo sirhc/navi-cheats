@@ -44,16 +44,16 @@ $ instance_id: aws ec2 describe-instances --query 'Reservations[].Instances[].{I
 aws ssm start-session --target <instance_id>
 
 # EC2 instance ids by name
-aws ec2 describe-instances --filters 'Name=tag:Name,Values=<name>' --query 'Reservations[].Instances[].[InstanceId]' --output text
+aws ec2 describe-instances --filters "Name=tag:Name,Values=<name>" --query 'Reservations[].Instances[].[InstanceId]' --output text
 
 # Describe an instance
 aws ec2 describe-instances --instance-id <instance_id>
 
 # List tags for an EC2 instance
-aws ec2 describe-tags --filters 'Name=resource-id,Values=<instance_id>'
+aws ec2 describe-tags --filters "Name=resource-id,Values=<instance_id>"
 
 # Find a security group by name
-aws ec2 describe-security-groups --filters 'Name=tag:Name,Values=<name>'
+aws ec2 describe-security-groups --filters "Name=tag:Name,Values=<name>"
 
 # Count network interface types
 aws ec2 describe-network-interfaces --query 'NetworkInterfaces[].[InterfaceType]' --output text | sort | uniq -c | sort -n
@@ -66,12 +66,12 @@ aws s3api list-buckets --query "Buckets[?contains(Name, '<name>')].[Name]" --out
 % aws, ssm
 
 # Get parameter
-aws ssm get-parameter --name '<name>' --with-decryption --query 'Parameter.Value' --output text
+aws ssm get-parameter --name "<name>" --with-decryption --query 'Parameter.Value' --output text
 
 # Set parameter
-aws ssm put-parameter --name '<name>' --value '<value>' --type '<type>'
+aws ssm put-parameter --name "<name>" --value "<value>" --type "<type>"
 
 $ type: printf 'String\nStringList\nSecureString\n'
 
 # Search for parameter
-aws ssm describe-parameters --parameter-filters 'Key=Name,Option=Contains,Values=<search>' --query 'Parameters[*].[Name]' --output text
+aws ssm describe-parameters --parameter-filters "Key=Name,Option=Contains,Values=<search>" --query 'Parameters[*].[Name]' --output text
