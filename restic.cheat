@@ -1,0 +1,23 @@
+% restic
+
+# Show snapshots by host
+restic snapshots --group-by host |& less
+
+# Remove old snapshots
+restic forget --keep-within-daily 14d --keep-within-weekly 3m --keep-within-monthly 2y --keep-within-yearly 10y
+
+# Remove old snapshots, with pruning
+restic forget --keep-within-daily 14d --keep-within-weekly 3m --keep-within-monthly 2y --keep-within-yearly 10y --prune
+
+% restic, b2
+
+; The restic-b2 command is a wrapper around the restic command that points at my repository in B2.
+
+# Show snapshots by host
+restic-b2 snapshots --group-by host |& less
+
+# Remove old snapshots
+restic-b2 forget --keep-within-daily 14d --keep-within-weekly 3m --keep-within-monthly 2y --keep-within-yearly 10y
+
+# Remove old snapshots, with pruning
+restic-b2 forget --keep-within-daily 14d --keep-within-weekly 3m --keep-within-monthly 2y --keep-within-yearly 10y --prune
