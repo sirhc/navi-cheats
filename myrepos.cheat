@@ -6,6 +6,7 @@ export MR_CONFIG=<mrconfig>
 $ mrconfig: find "$PWD" -mindepth 1 -maxdepth 1 -name '.mrconfig*' | sort --- --fzf-overrides '--no-select-1'
 
 # Convert one-line mr output to CSV
-sed -e 's,mr [a-z]*: .*/,,' -e '/^$/d' <file> | paste -s -d',\n' -
+mr <mr_command> | sed -e 's,mr [^:]*: .*/,,' -e '/^$/d' | gpaste -s -d ',\n' -
 
-$ file: ls -1p | grep -v / --- --fzf-overrides '--no-select-1'
+# Display a table of latest releases
+mr -m latestrelease | sed -e 's,mr [^:]*: .*/,,' -e '/^$/d' | gpaste -s -d ',\n' - | mlr --c2p --hi label 'Repository,Latest Release'
