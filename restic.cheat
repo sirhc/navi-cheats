@@ -3,6 +3,8 @@
 # Set permissions on the restic command
 sudo chown root:restic /usr/bin/restic && sudo chmod 0750 /usr/bin/restic && sudo setcap cap_dac_read_search=+ep /usr/bin/restic
 
+% restic, nas
+
 # Back up a directory
 restic-nas --verbose backup --exclude-caches --exclude-if-present .nobackup --one-file-system <directory>
 
