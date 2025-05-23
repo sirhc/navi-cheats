@@ -42,6 +42,9 @@ $ pull_request: gh pr list --limit 100 --state merged | mlr --t2p --hi label id,
 # Perform a quick pull request review
 gh pr view && gh pr diff && read -q '?Approve? ' && gh approve
 
+# Squash merge a pull request, using the PR's title and body
+gh pr view --json body --jq .body | gh pr merge --body-file - --delete-branch --squash --subject "$( gh pr view --json title --jq .title )"
+
 % github, gh, api
 @ github, gh, common
 
