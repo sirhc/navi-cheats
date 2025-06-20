@@ -45,6 +45,9 @@ gh pr view && gh pr diff && read -q '?Approve? ' && gh approve
 # Squash merge a pull request, using the PR's title and body
 gh pr view --json body --jq .body | gh pr merge --body-file - --delete-branch --squash --subject "$( gh pr view --json title --jq .title )"
 
+# Show commit history since the latest release
+git log -p <gh_latest_release>..HEAD
+
 % github, gh, api
 @ github, gh, common
 
