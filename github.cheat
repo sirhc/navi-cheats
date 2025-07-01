@@ -1,5 +1,7 @@
 % github, gh, common
 
+$ gh_branch: git for-each-ref --format='%(refname:short)' refs/heads/
+$ gh_current_branch: git rev-parse --abbrev-ref HEAD
 $ gh_default_branch: gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
 $ gh_user: gh api user --jq .login --- --fzf-overrides '--no-select-1'
 $ gh_latest_release: gh api 'repos/{owner}/{repo}/releases/latest' --jq '.tag_name'
@@ -9,6 +11,13 @@ $ gh_latest_release: gh api 'repos/{owner}/{repo}/releases/latest' --jq '.tag_na
 
 # Get default branch
 gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
+
+# Rename a branch locally and on the remote
+gh api -X POST -H 'Accept: application/vnd.github.v3.raw+json' repos/:owner/:repo/branches/<gh_branch>/rename -F new_name=<new_name>
+git branch -m <gh_branch> <new_name>
+git fetch origin
+git branch -u origin/<new_name> <new_name>
+git remote set-head origin -a
 
 # Create a PUBLIC repository based on the current directory
 gh repo create <gh_user>/<git_reponame> --public --push --source=.
