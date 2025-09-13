@@ -8,3 +8,9 @@ bat --list-themes | fzf --preview 'bat --theme={} --color=always ~/.zshrc'
 
 # Convert just README to man page
 mkdir -p ~/.local/share/man/man5 && gh api /repos/casey/just/contents/README.md --jq .content | base64 -d | pandoc -f markdown -t man -s | gzip -c > ~/.local/share/man/man5/justfile.5.gz
+
+# Open Syncthing port
+sudo firewall-cmd --add-port=8384/tcp
+
+# Close Syncthing port
+sudo firewall-cmd --remove-port=8384/tcp
