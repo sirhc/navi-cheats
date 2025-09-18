@@ -31,6 +31,12 @@ git push <git_remote> --delete <git_remote_branch> --no-verify
 # Merge a branch into the current branch
 git merge <git_branch>
 
+# Delete a tag
+git tag -d <git_tag>
+
+# Delete a remote tag
+git push --delete origin <git_tag>
+
 % git, log
 
 # Show all authors of a repository
