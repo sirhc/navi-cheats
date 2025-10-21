@@ -3,8 +3,12 @@
 $ gh_branch: git for-each-ref --format='%(refname:short)' refs/heads/
 $ gh_current_branch: git rev-parse --abbrev-ref HEAD
 $ gh_default_branch: gh repo view --json defaultBranchRef --jq .defaultBranchRef.name
-$ gh_user: gh api user --jq .login --- --fzf-overrides '--no-select-1'
 $ gh_latest_release: gh api 'repos/{owner}/{repo}/releases/latest' --jq '.tag_name'
+$ gh_pr_issue: gh pr view --json title --jq '.title | match("^([A-Z]+-[0-9]+)").captures[0].string'
+$ gh_pr_number: gh pr view --json number --jq .number
+$ gh_pr_url: gh pr view --json url --jq .url
+$ gh_repo_name: gh repo view --json name --jq .name
+$ gh_user: gh api user --jq .login --- --fzf-overrides '--no-select-1'
 
 % github, gh
 @ github, gh, common
