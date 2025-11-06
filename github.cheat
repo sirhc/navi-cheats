@@ -49,8 +49,8 @@ tig <gh_latest_release>
 # Cherry pick the merge commit from a pull request
 git cherry-pick <merge_commit> -m1
 
-$ merge_commit: gh pr view <pull_request> --json mergeCommit --jq .mergeCommit.oid
-$ pull_request: gh pr list --limit 100 --state merged | mlr --t2p --hi label id,summary,branch,state,date then cut -f id,summary,branch,date --- --headers 1 --column 1 --delimiter '\s+'
+$ merge_commit: gh pr view <merged_pull_request> --json mergeCommit --jq .mergeCommit.oid
+$ merged_pull_request: gh pr list --limit 100 --state merged | mlr --t2p --hi label id,summary,branch,state,date then cut -f id,summary,branch,date --- --headers 1 --column 1 --delimiter '\s+'
 
 # Perform a quick pull request review
 gh pr view && gh pr diff && read -q '?Approve? ' && gh approve
@@ -60,6 +60,11 @@ gh pr view --json body --jq .body | gh pr merge --body-file - --delete-branch --
 
 # Show commit history since the latest release
 git log -p <gh_latest_release>..HEAD
+
+# Request a Copilot review on a Pull Request
+gh api --method POST '/repos/{owner}/{repo}/pulls/<open_pull_request>/requested_reviewers' -f 'reviewers[]=copilot-pull-request-reviewer[bot]'
+
+$ open_pull_request: gh pr list --limit 100 --state open | mlr --t2p --hi label id,summary,branch,state,date then cut -f id,summary,branch,date --- --headers 1 --column 1 --delimiter '\s+'
 
 % github, gh, api
 @ github, gh, common
