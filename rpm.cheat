@@ -1,0 +1,7 @@
+% rpm
+
+$ rpm_file: rpm2cpio <rpm_package> | cpio -t --quiet
+$ rpm_package: printf '%s\n' *.rpm
+
+# Extract a file from an RPM package
+rpm2cpio <rpm_package> | cpio -icv  --quiet '<rpm_file>'
