@@ -69,5 +69,8 @@ $ open_pull_request: gh pr list --limit 100 --state open | mlr --t2p --hi label 
 % github, gh, api
 @ github, gh, common
 
+# Show rate limit reset time
+gh api rate_limit | jq -c '.rate | .reset |= (localtime | strftime("%F %T"))'
+
 # List all tags for a repository
 gh api 'repos/{owner}/{repo}/git/refs/tags'
