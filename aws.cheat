@@ -43,6 +43,16 @@ $ instance_id: aws ec2 describe-instances --query 'Reservations[].Instances[].{I
 # Start a session on an EC2 instance
 aws ssm start-session --target <instance_id>
 
+# SSH to an EC2 instance by public IP address
+ssh <instance_ip_public>
+
+$ instance_ip_public: aws ec2 describe-instances --query 'Reservations[].Instances[].{IpAddress: PublicIpAddress, InstanceId: InstanceId, Name: Tags[?Key==`Name`]|[0].Value}' --output json | mlr --j2p cat --- --headers 1 --column 1 --delimiter '\s+'
+
+# SSH to an EC2 instance by private IP address
+ssh <instance_ip_private>
+
+$ instance_ip_private: aws ec2 describe-instances --query 'Reservations[].Instances[].{IpAddress: PrivateIpAddress, InstanceId: InstanceId, Name: Tags[?Key==`Name`]|[0].Value}' --output json | mlr --j2p cat --- --headers 1 --column 1 --delimiter '\s+'
+
 # EC2 instance ids by name
 aws ec2 describe-instances --filters "Name=tag:Name,Values=<name>" --query 'Reservations[].Instances[].[InstanceId]' --output text
 
